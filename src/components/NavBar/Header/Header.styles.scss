@@ -1,0 +1,39 @@
+.header {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0px;
+	width: 100%;
+	z-index: 200;
+	overflow: hidden;
+	background-image: url(../../../assets/hojas-blancas.svg);
+	background-color: var(--clr-background);
+	background-size: cover;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.logo {
+	display: flex;
+	align-items: center;
+	margin: auto 0;
+	min-width: 150px;
+	max-width: 300px;
+	max-height: 94px;
+	width: 200px;
+}
+
+.toggle-menu {
+	font-size: 1.5rem;
+	color: var(--clr-secondary);
+	background: transparent;
+	border-color: transparent;
+	cursor: pointer;
+	display: flex;
+	margin: 0.5rem 3em 0 1em;
+
+	&:focus {
+		outline: none;
+	}
+}

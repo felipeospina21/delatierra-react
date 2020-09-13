@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from './components/Header/Header';
-import ProductsCollection from './components/ProductsCollection/ProductsCollection';
+import Header from './components/NavBar/Header/Header';
+import ProductsCollection from './components/Products/ProductsCollection/ProductsCollection';
 import './App.css';
 
 function App() {

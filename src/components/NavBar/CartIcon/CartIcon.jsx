@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReactComponent as ShoppingIcon } from '../../assets/cartLogo.svg';
+import { ReactComponent as ShoppingIcon } from '../../../assets/cartLogo.svg';
 import './CartIcon.styles.scss';
 
 const CartIcon = () => (
