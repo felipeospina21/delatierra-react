@@ -24,6 +24,8 @@ class ProductsCollection extends React.Component {
 					],
 					ingredients : [ '100% mantequilla de vacas de pastoreo' ],
 					sizes       : [ '315gr', '160gr' ],
+					cost        : [ 24500, 13000 ],
+					quantity    : [ 0, 0 ],
 					showBuyMenu : false
 				},
 				{
@@ -34,6 +36,8 @@ class ProductsCollection extends React.Component {
 					properties  : [],
 					ingredients : [],
 					sizes       : [ '400gr', '200gr' ],
+					cost        : [ 46500, 24000 ],
+					quantity    : [ 0, 0 ],
 					showBuyMenu : false
 				},
 				{
@@ -44,6 +48,8 @@ class ProductsCollection extends React.Component {
 					properties  : [],
 					ingredients : [],
 					sizes       : [ '400gr', '200gr' ],
+					cost        : [ 40500, 21000 ],
+					quantity    : [ 0, 0 ],
 					showBuyMenu : false
 				}
 			]

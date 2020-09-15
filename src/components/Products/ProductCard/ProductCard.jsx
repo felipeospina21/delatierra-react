@@ -1,5 +1,5 @@
 import React from 'react';
-import BuyBtn from '../BuyBtn/BuyBtn';
+// import BuyBtn from '../BuyBtn/BuyBtn';
 import SelectProduct from '../SelectProduct/SelectProduct';
 import './ProductCard.styles.scss';
 
@@ -9,7 +9,13 @@ const ProductCard = props => (
 		<div className='product-img'>
 			<img src={require(`../../../assets/${props.image}`)} alt='prod-img' />
 
-			{props.showBuyMenu ? <SelectProduct /> : null}
+			{/* {props.showBuyMenu ? <SelectProduct /> : null} */}
+			<SelectProduct
+				title={props.title}
+				size={props.sizes}
+				cost={props.cost}
+				quantity={props.quantity}
+			/>
 
 			<button onClick={props.clickHandler} className='buy-btn'>
 				Comprar

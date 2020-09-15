@@ -8,3 +8,31 @@
 	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 	opacity: 0.92;
 }
+
+.product-size {
+	height: 90%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin: auto;
+	padding: 0 0 1em 0;
+}
+
+.product-quantity {
+	margin: 1em;
+}
+
+.cost {
+	margin: 0 0 0.8em 0;
+}
+
+.add-to-cart-btn {
+	border: solid 0.5px var(--clr-primary);
+	color: black;
+	font-weight: 700;
+	padding: 0.5em;
+	background-color: transparent;
+	position: absolute;
+	bottom: 2px;
+	width: 100%;
+}
