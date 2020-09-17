@@ -1,24 +1,28 @@
-import React from 'react';
+import React, { useState }from 'react';
 import AddRemoveBtn from '../AddRemoveBtn/AddRemoveBtn';
+import { FiX as CloseBtn } from 'react-icons/fi';
 import './SelectProduct.styles.scss';
 
-const SelectProduct = ({ size, quantity, cost }) => {
+const SelectProduct = ({ size, quantity, cost, index, toggleMenu,closeMenu}) => {
+
 	return (
 		<div className='select-product'>
+			<CloseBtn className='close-btn' onclick={() => closeMenu(index)}/>
+
 			<div className='product-size'>
-				<div class='product-quantity'>
+				<div className='product-quantity'>
 					{`${size[0]}`}
 					<AddRemoveBtn quantity={quantity} />
 				</div>
-				<div class='cost'>{`$${cost[0]}`}</div>
+				<div className='cost'>{`$${cost[0]}`}</div>
 
-				<div class='product-quantity'>
+				<div className='product-quantity'>
 					{`${size[1]}`}
 					<AddRemoveBtn quantity={quantity} />
 				</div>
-				<div class='cost'>{`$${cost[1]}`}</div>
+				<div className='cost'>{`$${cost[1]}`}</div>
 
-				<button class='add-to-cart-btn'>Agregar</button>
+				<button className='add-to-cart-btn'>Agregar</button>
 			</div>
 		</div>
 	);

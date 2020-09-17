@@ -1,23 +1,36 @@
 import React from 'react';
-// import BuyBtn from '../BuyBtn/BuyBtn';
 import SelectProduct from '../SelectProduct/SelectProduct';
 import './ProductCard.styles.scss';
 
-const ProductCard = props => (
+const ProductCard = ({
+	title,
+	sizes,
+	cost,
+	quantity,
+	index,
+	image,
+	toggleMenu,
+	showBuyMenu,
+	closeMenu
+}) => (
 	<div className='product-card'>
-		<h4 className='product-title'>{props.title}</h4>
+		<h4 className='product-title'>{title}</h4>
 		<div className='product-img'>
-			<img src={require(`../../../assets/${props.image}`)} alt='prod-img' />
+			<img src={require(`../../../assets/${image}`)} alt='prod-img' />
 
-			{/* {props.showBuyMenu ? <SelectProduct /> : null} */}
-			<SelectProduct
-				title={props.title}
-				size={props.sizes}
-				cost={props.cost}
-				quantity={props.quantity}
-			/>
+			{showBuyMenu ? (
+				<SelectProduct
+					title={title}
+					size={sizes}
+					cost={cost}
+					quantity={quantity}
+					index={index}
+					toggleMenu={toggleMenu}
+					closeMenu={closeMenu}
+				/>
+			) : null}
 
-			<button onClick={props.clickHandler} className='buy-btn'>
+			<button onClick={() => toggleMenu(index)} index={index} className='buy-btn'>
 				Comprar
 			</button>
 		</div>
@@ -25,31 +38,3 @@ const ProductCard = props => (
 );
 
 export default ProductCard;
-
-// class ProductCard extends React.Component {
-// 	constructor(props){
-// 		super()
-// 	}
-// 	clickHandler = () => {
-// 		this.props.clickHandler()
-// 	}
-// 	render() {
-
-// 		return (
-// 			<div className='product-card'>
-// 			<h4 className='product-title'>{props.title}</h4>
-// 			<div className='product-img'>
-// 				<img src={require(`../../../assets/${props.image}`)} alt='prod-img' />
-
-// 				{props.showBuyMenu ? <SelectProduct /> : null}
-
-// 				<button onClick={() => props.clickHandler} className='buy-btn'>
-// 					Comprar
-// 				</button>
-// 			</div>
-// 		</div>
-// 		);
-// 	}
-// }
-
-// export default ProductCard;

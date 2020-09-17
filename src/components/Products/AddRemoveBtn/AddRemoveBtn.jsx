@@ -6,15 +6,15 @@ import './AddRemoveBtn.styles.scss';
 
 function AddRemoveBtn(props) {
 	return (
-		<span class='add-remove-product'>
-			<button class='remove-product'>
-				<MinusIcon class='minus-icon' />
+		<span className='add-remove-product'>
+			<button className='remove-product'>
+				<MinusIcon className='minus-icon' />
 			</button>
 
-			<span class='quantity-selected'>{props.quantity[0]}</span>
+			<span className='quantity-selected'>{props.quantity[0]}</span>
 
-			<button class='add-product'>
-				<PlusIcon class='plus-icon' />
+			<button className='add-product'>
+				<PlusIcon className='plus-icon' />
 			</button>
 		</span>
 	);
