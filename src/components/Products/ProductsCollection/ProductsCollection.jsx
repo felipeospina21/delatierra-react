@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import ProductCard from '../ProductCard/ProductCard';
-import CartDropDown from '../CartDropDown/CartDropDown';
+import CartDropDown from '../CartDropdown/CartDropdown';
 import './ProductsCollection.styles.scss';
 
 function ProductsCollection() {
-	const [cartDropdown, setCartDropdown] = useState(false)
 	const [ products, setProducts ] = useState([
 		{
 			title       : 'ghee',
@@ -55,10 +54,6 @@ function ProductsCollection() {
 			showBuyMenu : false
 		}
 	]);
-
-	const showCartDropdown = ()=>{
-		setCartDropdown(true)
-	}
 
 	const openMenu = index => {
 		const newProducts = [ ...products ];
