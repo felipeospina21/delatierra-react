@@ -5,6 +5,8 @@ import { ReactComponent as MenuIcon } from '../../../assets/menu.svg';
 import { ReactComponent as CloseIcon } from '../../../assets/close-icon.svg';
 import CartIcon from '../CartIcon/CartIcon';
 import NavLinks from '../NavLinks/NavLinks';
+import CartDropDown from '../../Products/CartDropDown/CartDropDown';
+
 import './Header.styles.scss';
 
 class Header extends React.Component {
@@ -19,15 +21,18 @@ class Header extends React.Component {
 
 	render() {
 		return (
-			<div className='header '>
-				<Logo className='logo' />
-				{this.state.showMenu ? (
-					<CloseIcon className='toggle-menu' onClick={this.toggleClass} />
-				) : (
-					<MenuIcon className='toggle-menu' onClick={this.toggleClass} />
-				)}
-				{this.state.showMenu ? <NavLinks /> : null}
-				<CartIcon />
+			<div>
+				<div className='header '>
+					<Logo className='logo' />
+					{this.state.showMenu ? (
+						<CloseIcon className='toggle-menu' onClick={this.toggleClass} />
+					) : (
+						<MenuIcon className='toggle-menu' onClick={this.toggleClass} />
+					)}
+					{this.state.showMenu ? <NavLinks /> : null}
+					<CartIcon />
+				</div>
+				<CartDropDown />
 			</div>
 		);
 	}

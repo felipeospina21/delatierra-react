@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import ProductCard from '../ProductCard/ProductCard';
+import CartDropDown from '../CartDropDown/CartDropDown';
 import './ProductsCollection.styles.scss';
 
 function ProductsCollection() {
+	const [cartDropdown, setCartDropdown] = useState(false)
 	const [ products, setProducts ] = useState([
 		{
 			title       : 'ghee',
@@ -54,7 +56,11 @@ function ProductsCollection() {
 		}
 	]);
 
-	const toggleMenu = index => {
+	const showCartDropdown = ()=>{
+		setCartDropdown(true)
+	}
+
+	const openMenu = index => {
 		const newProducts = [ ...products ];
 		newProducts[index].showBuyMenu = true;
 		setProducts(newProducts);
@@ -64,19 +70,20 @@ function ProductsCollection() {
 		const newProducts = [ ...products ];
 		newProducts[index].showBuyMenu = false;
 		setProducts(newProducts);
-	}
+	};
 
 	return (
 		<div className='products-collection'>
 			<div className='products-collection-title'>
 				<h3>nuestros productos</h3>
+				{/* <CartDropDown /> */}
 			</div>
 			{products.map(({ ...otherProductProps }, index) => (
 				<ProductCard
 					key={index}
 					index={index}
 					{...otherProductProps}
-					toggleMenu={toggleMenu}
+					openMenu={openMenu}
 					closeMenu={closeMenu}
 				/>
 			))}

@@ -1,20 +1,20 @@
 import React from 'react';
-import { ReactComponent as PlusIcon } from '../../../assets/plus-icon.svg';
-import { ReactComponent as MinusIcon } from '../../../assets/minus-icon.svg';
+import { ReactComponent as AddBtn } from '../../../assets/plus-icon.svg';
+import { ReactComponent as RemoveBtn } from '../../../assets/minus-icon.svg';
 
 import './AddRemoveBtn.styles.scss';
 
-function AddRemoveBtn(props) {
+function AddRemoveBtn({ quantity, addItem, removeItem, id }) {
 	return (
 		<span className='add-remove-product'>
 			<button className='remove-product'>
-				<MinusIcon className='minus-icon' />
+				<RemoveBtn className='minus-icon' onClick={() => removeItem(id)} />
 			</button>
 
-			<span className='quantity-selected'>{props.quantity[0]}</span>
+			<span className='quantity-selected'>{quantity}</span>
 
 			<button className='add-product'>
-				<PlusIcon className='plus-icon' />
+				<AddBtn className='plus-icon' onClick={() => addItem(id)} />
 			</button>
 		</span>
 	);

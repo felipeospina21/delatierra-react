@@ -4,12 +4,12 @@ import './ProductCard.styles.scss';
 
 const ProductCard = ({
 	title,
+	alias,
 	sizes,
 	cost,
-	quantity,
 	index,
 	image,
-	toggleMenu,
+	openMenu,
 	showBuyMenu,
 	closeMenu
 }) => (
@@ -20,17 +20,15 @@ const ProductCard = ({
 
 			{showBuyMenu ? (
 				<SelectProduct
-					title={title}
+					alias={alias}
 					size={sizes}
 					cost={cost}
-					quantity={quantity}
 					index={index}
-					toggleMenu={toggleMenu}
 					closeMenu={closeMenu}
 				/>
 			) : null}
 
-			<button onClick={() => toggleMenu(index)} index={index} className='buy-btn'>
+			<button onClick={() => openMenu(index)} index={index} className='buy-btn'>
 				Comprar
 			</button>
 		</div>
