@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import AddRemoveBtn from '../AddRemoveBtn/AddRemoveBtn';
+import ShopContext from '../../../context/shop-context';
+import { ACTIONS } from '../../../context/reducers';
 import { FiX as CloseBtn } from 'react-icons/fi';
 import './SelectProduct.styles.scss';
 
-const SelectProduct = ({ alias, size, cost, index, closeMenu }) => {
+const SelectProduct = ({ alias, size, cost, index, closeMenu, dispatch }) => {
 	const [ countBigSize, setCountBigSize ] = useState(0);
 	const [ countSmallSize, setCountSmallSize ] = useState(0);
 	const [ cartItems, setCartItems ] = useState([]);
+
+	const context = useContext(ShopContext);
 
 	function addItem(id) {
 		if (id === 0) {
@@ -33,7 +37,10 @@ const SelectProduct = ({ alias, size, cost, index, closeMenu }) => {
 
 	return (
 		<div className='select-product'>
-			<CloseBtn className='close-btn' onClick={() => closeMenu(index)} />
+			<CloseBtn
+				className='close-btn'
+				onClick={() => context.toggleMenu(context.products[index].showBuyMenu)}
+			/>
 
 			<div className='product-size'>
 				<div className='product-quantity'>
@@ -58,9 +65,7 @@ const SelectProduct = ({ alias, size, cost, index, closeMenu }) => {
 				</div>
 				<div className='cost'>{`$${cost[1]}`}</div>
 
-				<button className='add-to-cart-btn' onClick={() => addItemsToCart(alias, size)}>
-					Agregar
-				</button>
+				<button className='add-to-cart-btn'>Agregar</button>
 			</div>
 		</div>
 	);
