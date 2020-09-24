@@ -18,7 +18,9 @@ const ProductCard = ({ title, image, alias, size, cost }) => {
 			<div className='product-img'>
 				<img src={require(`../../../assets/${image}`)} alt='prod-img' />
 
-				{showBuyMenu ? <SelectProduct alias={alias} size={size} cost={cost} /> : null}
+				{showBuyMenu ? (
+					<SelectProduct alias={alias} size={size} cost={cost} toggleMenu={toggleMenu} />
+				) : null}
 
 				<button onClick={() => toggleMenu()} className='buy-btn'>
 					Comprar
