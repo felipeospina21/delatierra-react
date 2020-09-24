@@ -1,15 +1,15 @@
 import React from 'react';
 import Products from './pages/Products/Products';
-import GlobalState from './context/GlobalState';
 import './App.css';
+import { ProductsProvider } from './context/ProductsContext';
 
 function App() {
 	return (
-		<GlobalState>
+		<ProductsProvider>
 			<div className='App'>
 				<Products />
 			</div>
-		</GlobalState>
+		</ProductsProvider>
 	);
 }
 

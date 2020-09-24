@@ -1,7 +1,9 @@
-import React, { createContext } from 'react';
+import React, { useState, createContext } from 'react';
 
-export default createContext({
-	products : [
+export const ProductsContext = createContext();
+
+export const ProductsProvider = props => {
+	const [ products, setProducts ] = useState([
 		{
 			title       : 'ghee',
 			alias       : 'Ghee',
@@ -50,5 +52,11 @@ export default createContext({
 			quantity    : [ 0, 0 ],
 			showBuyMenu : false
 		}
-	]
-});
+	]);
+
+	return (
+		<ProductsContext.Provider value={[ products, setProducts ]}>
+			{props.children}
+		</ProductsContext.Provider>
+	);
+};
