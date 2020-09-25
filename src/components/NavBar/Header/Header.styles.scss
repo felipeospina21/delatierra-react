@@ -31,9 +31,17 @@
 	border-color: transparent;
 	cursor: pointer;
 	display: flex;
-	margin: 0.5rem 3em 0 1em;
+	margin: 0.5rem 0.5em 0 0.5em;
 
 	&:focus {
 		outline: none;
 	}
+}
+
+.user-icon {
+	text-decoration: none;
+	color: var(--clr-primary);
+	margin-right: 3.5em;
+	margin-top: 0.5em;
+	font-size: 1.2rem;
 }

@@ -7,6 +7,7 @@ import AboutUs from './pages/AboutUs/AboutUs';
 import Products from './pages/Products/Products';
 import Contact from './pages/Contact/Contact';
 import Blog from './pages/Blog/Blog';
+import SignInSignUp from './pages/SignInSignUp/SignInSignUp';
 
 import './App.css';
 
@@ -17,24 +18,28 @@ function App() {
 				<Router>
 					<div className='App'>
 						<Switch>
-							<Route exact path='/conocenos'>
+							<Route exact path='/'>
+								<Home />
+							</Route>
+
+							<Route path='/conocenos'>
 								<AboutUs />
 							</Route>
 
-							<Route exact path='/productos'>
+							<Route path='/productos'>
 								<Products />
 							</Route>
 
-							<Route exact path='/contacto'>
+							<Route path='/contacto'>
 								<Contact />
 							</Route>
 
-							<Route exact path='/blog'>
+							<Route path='/blog'>
 								<Blog />
 							</Route>
 
-							<Route path='/'>
-								<Home />
+							<Route path='/registro'>
+								<SignInSignUp />
 							</Route>
 						</Switch>
 					</div>

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../../assets/logoDLT.svg';
 import { ReactComponent as MenuIcon } from '../../../assets/menu.svg';
 import { ReactComponent as CloseIcon } from '../../../assets/close-icon.svg';
+import { FaRegUser as UserIcon } from 'react-icons/fa';
 import CartIcon from '../CartIcon/CartIcon';
 import NavLinks from '../NavLinks/NavLinks';
 import CartDropdown from '../../Products/CartDropdown/CartDropdown';
@@ -31,7 +32,9 @@ const Header = () => {
 					<MenuIcon className='toggle-menu' onClick={toggleClass} />
 				)}
 				{showMenu ? <NavLinks /> : null}
-
+				<Link to='/registro' className='user-icon'>
+					<UserIcon />
+				</Link>
 				<CartIcon toggleCartDropdown={toggleCartDropdown} />
 			</div>
 			{showCartMenu ? <CartDropdown /> : null}
