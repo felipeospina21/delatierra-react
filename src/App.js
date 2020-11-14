@@ -7,6 +7,7 @@ import AboutUs from './pages/AboutUs/AboutUs';
 import Products from './pages/Products/Products';
 import Contact from './pages/Contact/Contact';
 import Blog from './pages/Blog/Blog';
+import Inventory from './pages/Inventory/Inventory';
 import SignInSignUp from './pages/SignInSignUp/SignInSignUp';
 
 import './App.css';
@@ -36,6 +37,10 @@ function App() {
 
 							<Route path='/blog'>
 								<Blog />
+							</Route>
+
+							<Route path='/inventory'>
+								<Inventory />
 							</Route>
 
 							<Route path='/registro'>
