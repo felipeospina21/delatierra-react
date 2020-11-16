@@ -1,0 +1,24 @@
+table,
+td {
+	border: 1px solid black;
+	margin: 0;
+	border-spacing: 0;
+}
+
+td {
+	margin: 0;
+	padding: 0.3em 1em;
+	width: 10em;
+}
+
+.inventory-col {
+	display: flex;
+	justify-content: space-around;
+	align-items: stretch;
+}
+
+.update-inventory-btn {
+	display: block;
+	margin: 2em;
+	padding: 0.5em 1em;
+}

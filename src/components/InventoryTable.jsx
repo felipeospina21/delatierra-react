@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import InventoryProduct from './InventoryProduct';
 import { firestore } from '../firebase/firebase.utils';
 
+import './InventoryProduct.scss';
+
 const InventoryTable = () => {
 	const [ products, setProducts ] = useState([]);
+
 	useEffect(() => {
 		const productsRef = firestore.collection('productos');
 		const allProducts = productsRef
@@ -17,29 +20,79 @@ const InventoryTable = () => {
 			});
 	}, []);
 
-	function addItem(id) {
-		const product = products.filter(product => product.name === id);
-		if (product) {
-			setProducts(product.quantity + 1);
-		}
+	function updateInventory() {
+		const updatedProducts = [];
+		products.forEach(product => {
+			const productRef = firestore
+				.collection('productos')
+				.doc(product.ref)
+				.update({ quantity: product.quantity })
+				.then(function() {
+					updatedProducts.push(true);
+				})
+				.catch(function(error) {
+					console.error('Error updating document: ', error);
+				});
+		});
+
+		const updated = element => element === true;
+		const succes = 'Productos actualizados en la Base de Datos';
+		const fail = 'Error al actualizar productos';
+		updatedProducts.every(updated) ? alert(succes) : alert(fail);
 	}
 
-	function removeItem() {
-		setProducts(prevCount => prevCount - 1);
-	}
+	// function addItem(id) {
+	// 	const newProducts = [ ...products ];
+	// 	newProducts.forEach(product => {
+	// 		if (product.ref === id) {
+	// 			const prevQuantity = product.quantity;
+	// 			product.quantity = prevQuantity + 1;
+	// 		}
+	// 	});
+	// 	setProducts(newProducts);
+	// }
+
+	// function removeItem(id) {
+	// 	const newProducts = [ ...products ];
+	// 	newProducts.forEach(product => {
+	// 		if (product.ref === id) {
+	// 			const prevQuantity = product.quantity;
+	// 			if (prevQuantity !== 0) {
+	// 				product.quantity = prevQuantity - 1;
+	// 			}
+	// 		}
+	// 	});
+	// 	setProducts(newProducts);
+	// }
 
 	return (
-		<table>
-			<tr>
-				<th>Producto</th>
-				<th>Cantidad</th>
-			</tr>
-			{products.map(product => {
-				return (
-					<InventoryProduct key={product.name} product={product} addItem={addItem} />
-				);
-			})}
-		</table>
+		<div>
+			<table>
+				<thead>
+					<tr>
+						<th>Producto</th>
+						<th>Cantidad</th>
+					</tr>
+				</thead>
+				<tbody>
+					{products.map(product => {
+						return (
+							<InventoryProduct
+								key={product.name}
+								product={product}
+								products={products}
+								setProducts={setProducts}
+								// addItem={addItem}
+								// removeItem={removeItem}
+							/>
+						);
+					})}
+				</tbody>
+			</table>
+			<button className='update-inventory-btn' onClick={() => updateInventory()}>
+				Actualizar Inventario
+			</button>
+		</div>
 	);
 };
 
