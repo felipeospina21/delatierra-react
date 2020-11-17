@@ -9,10 +9,10 @@ const InventoryTable = () => {
 
 	useEffect(() => {
 		const productsRef = firestore.collection('productos');
-		const allProducts = productsRef
+		productsRef
 			.get()
 			.then(snapshot => {
-				const data = snapshot.docs.map(doc => doc.data());
+				const data = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
 				setProducts(data);
 			})
 			.catch(err => {
@@ -22,10 +22,10 @@ const InventoryTable = () => {
 
 	function updateInventory() {
 		const updatedProducts = [];
+
 		products.forEach(product => {
-			const productRef = firestore
-				.collection('productos')
-				.doc(product.ref)
+			const productRef = firestore.collection('productos').doc(product.id);
+			productRef
 				.update({ quantity: product.quantity })
 				.then(function() {
 					updatedProducts.push(true);
@@ -41,30 +41,6 @@ const InventoryTable = () => {
 		updatedProducts.every(updated) ? alert(succes) : alert(fail);
 	}
 
-	// function addItem(id) {
-	// 	const newProducts = [ ...products ];
-	// 	newProducts.forEach(product => {
-	// 		if (product.ref === id) {
-	// 			const prevQuantity = product.quantity;
-	// 			product.quantity = prevQuantity + 1;
-	// 		}
-	// 	});
-	// 	setProducts(newProducts);
-	// }
-
-	// function removeItem(id) {
-	// 	const newProducts = [ ...products ];
-	// 	newProducts.forEach(product => {
-	// 		if (product.ref === id) {
-	// 			const prevQuantity = product.quantity;
-	// 			if (prevQuantity !== 0) {
-	// 				product.quantity = prevQuantity - 1;
-	// 			}
-	// 		}
-	// 	});
-	// 	setProducts(newProducts);
-	// }
-
 	return (
 		<div>
 			<table>
@@ -72,26 +48,34 @@ const InventoryTable = () => {
 					<tr>
 						<th>Producto</th>
 						<th>Cantidad</th>
+						<th>Inventario</th>
 					</tr>
 				</thead>
 				<tbody>
 					{products.map(product => {
-						return (
-							<InventoryProduct
-								key={product.name}
-								product={product}
-								products={products}
-								setProducts={setProducts}
-								// addItem={addItem}
-								// removeItem={removeItem}
-							/>
-						);
+						return <InventoryProduct key={product.name} product={product} />;
 					})}
+					<tr>
+						<td />
+						<td>
+							<button className='update-inventory-btn' onClick={() => updateInventory()}>
+								Vender
+							</button>
+						</td>
+						<td>
+							<button className='update-inventory-btn'>Actualizar Inventario</button>
+						</td>
+					</tr>
 				</tbody>
 			</table>
-			<button className='update-inventory-btn' onClick={() => updateInventory()}>
-				Actualizar Inventario
-			</button>
+			{/* <div className='table-btn-container'>
+				<button className='update-inventory-btn' onClick={() => updateInventory()}>
+					Vender
+				</button>
+				<button className='update-inventory-btn' onClick={() => updateInventory()}>
+					Actualizar Inventario
+				</button>
+			</div> */}
 		</div>
 	);
 };

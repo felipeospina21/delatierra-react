@@ -3,66 +3,53 @@ import { firestore } from '../firebase/firebase.utils';
 
 import './InventoryProduct.scss';
 
-const InventoryProduct = ({ product, products, setProducts }) => {
-	const id = product.ref;
-	const [ inventory, setInventory ] = useState({});
-	const [ quantity, setQuantity ] = useState(0);
+const InventoryProduct = ({ product }) => {
+	const [ count, setCount ] = useState(0);
+	const [ initInventory, setInitInventory ] = useState(product.quantity);
 
-	useEffect(() => {
-		const productsRef = firestore.collection('productos').doc(id);
-		productsRef
-			.get()
-			.then(function(doc) {
-				if (doc.exists) {
-					setInventory(doc.data());
-				} else {
-					console.log('No such document!');
-				}
-			})
-			.catch(err => {
-				console.log('Error', err);
-			});
-	});
+	// useEffect(() => {
+	// 	const productsRef = firestore.collection('productos').doc(product.id);
+	// 	productsRef
+	// 		.get()
+	// 		.then(function(doc){
+	// 			const data = doc.data()
+	// 			setInitInventory(data.quantity)
+	// 		})
+	// 		.catch(err => {
+	// 			console.log('Error', err);
+	// 		});
+	// },[]);
 
-	function addItem(id) {
-		const newProducts = [ ...products ];
-		newProducts.forEach(product => {
-			if (product.ref === id) {
-				const prevQuantity = quantity;
-				setQuantity(prevQuantity => prevQuantity + 1);
-				const initInventory = product.quantity;
-				product.quantity = initInventory + quantity;
-			}
-		});
-
-		setProducts(newProducts);
+	function addItem() {
+		setCount(prevCount => prevCount + 1);
+		product.quantity = product.quantity - 1;
 	}
 
-	function removeItem(id) {
-		const newProducts = [ ...products ];
-		newProducts.forEach(product => {
-			if (product.ref === id) {
-				const prevQuantity = quantity;
-				if (prevQuantity !== 0) {
-					product.quantity = prevQuantity - 1;
-				}
-			}
-		});
-		setProducts(newProducts);
+	function removeItem() {
+		if (count !== 0) {
+			setCount(prevCount => prevCount - 1);
+			product.quantity = product.quantity + 1;
+		}
+	}
+
+	function updateProducts() {
+		product.quantity = product.quantity + count;
 	}
 
 	return (
 		<tr>
 			<td>{product.name}</td>
 			<td className='inventory-col'>
-				<div className='product-inventory'>{inventory.quantity}</div>
 				<span>
-					<button onClick={() => removeItem(id)}>-</button>
+					<button onClick={() => removeItem()}>-</button>
 				</span>
-				<div className='product-inventory'>{quantity}</div>
+				<div className='product-inventory'>{count}</div>
 				<span>
-					<button onClick={() => addItem(id)}>+</button>
+					<button onClick={() => addItem()}>+</button>
 				</span>
+			</td>
+			<td>
+				<div className='product-inventory'>{initInventory}</div>
 			</td>
 		</tr>
 	);
