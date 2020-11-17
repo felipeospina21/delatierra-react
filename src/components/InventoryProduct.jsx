@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { firestore } from '../firebase/firebase.utils';
+import { InventoryContext } from '../context/InventoryContext';
 
 import './InventoryProduct.scss';
 
-const InventoryProduct = ({ product }) => {
+const InventoryProduct = ({ product, products, setProducts }) => {
 	const [ count, setCount ] = useState(0);
+
 	const [ initInventory, setInitInventory ] = useState(product.quantity);
 
 	// useEffect(() => {
@@ -19,10 +21,12 @@ const InventoryProduct = ({ product }) => {
 	// 			console.log('Error', err);
 	// 		});
 	// },[]);
+	function saleProduct() {
+		product.quantity = product.quantity - 1;
+	}
 
 	function addItem() {
 		setCount(prevCount => prevCount + 1);
-		product.quantity = product.quantity - 1;
 	}
 
 	function removeItem() {
@@ -32,24 +36,28 @@ const InventoryProduct = ({ product }) => {
 		}
 	}
 
-	function updateProducts() {
-		product.quantity = product.quantity + count;
+	function handleChange(e) {
+		const { id, value } = e.target;
+		console.log(value);
+
+		const newProducts = products.map(product => {
+			if (product.id === id) {
+				return {
+					...product,
+					quantity : Number(product.quantity) + Number(value)
+				};
+			}
+			return product;
+		});
+		setProducts(newProducts);
 	}
 
 	return (
 		<tr>
 			<td>{product.name}</td>
+			<td>{initInventory}</td>
 			<td className='inventory-col'>
-				<span>
-					<button onClick={() => removeItem()}>-</button>
-				</span>
-				<div className='product-inventory'>{count}</div>
-				<span>
-					<button onClick={() => addItem()}>+</button>
-				</span>
-			</td>
-			<td>
-				<div className='product-inventory'>{initInventory}</div>
+				<input type='number' id={product.id} onChange={handleChange} />
 			</td>
 		</tr>
 	);

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { FiX as CloseBtn } from 'react-icons/fi';
 import { CartContext } from '../../../context/CartContext';
 import CartProduct from '../CartProduct/CartProduct';
-import './CartDropDown.styles.scss';
+import './CartDropdown.styles.scss';
 
 const CartDropdown = () => {
 	const [ cartItems, setCartItems ] = useContext(CartContext);

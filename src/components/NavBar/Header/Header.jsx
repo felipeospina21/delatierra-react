@@ -6,7 +6,7 @@ import { ReactComponent as CloseIcon } from '../../../assets/close-icon.svg';
 import { FaRegUser as UserIcon } from 'react-icons/fa';
 import CartIcon from '../CartIcon/CartIcon';
 import NavLinks from '../NavLinks/NavLinks';
-import CartDropdown from '../../Products/CartDropDown/CartDropDown';
+import CartDropdown from '../../Products/CartDropdown/CartDropdown';
 
 import './Header.styles.scss';
 

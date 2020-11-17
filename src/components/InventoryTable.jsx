@@ -47,13 +47,20 @@ const InventoryTable = () => {
 				<thead>
 					<tr>
 						<th>Producto</th>
-						<th>Cantidad</th>
 						<th>Inventario</th>
+						<th>Cantidad</th>
 					</tr>
 				</thead>
 				<tbody>
 					{products.map(product => {
-						return <InventoryProduct key={product.name} product={product} />;
+						return (
+							<InventoryProduct
+								key={product.name}
+								product={product}
+								products={products}
+								setProducts={setProducts}
+							/>
+						);
 					})}
 					<tr>
 						<td />
