@@ -1,64 +1,63 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { firestore } from '../firebase/firebase.utils';
-import { InventoryContext } from '../context/InventoryContext';
+import React, { useState, useEffect } from 'react';
 
 import './InventoryProduct.scss';
 
-const InventoryProduct = ({ product, products, setProducts }) => {
+const InventoryProduct = ({ product, products, setProducts, total, setTotal }) => {
 	const [ count, setCount ] = useState(0);
+	const [ subTotal, setSubTotal ] = useState(0);
 
-	const [ initInventory, setInitInventory ] = useState(product.quantity);
+	useEffect(
+		() => {
+			setSubTotal(product.price * count);
+		},
+		[ products ]
+	);
 
-	// useEffect(() => {
-	// 	const productsRef = firestore.collection('productos').doc(product.id);
-	// 	productsRef
-	// 		.get()
-	// 		.then(function(doc){
-	// 			const data = doc.data()
-	// 			setInitInventory(data.quantity)
-	// 		})
-	// 		.catch(err => {
-	// 			console.log('Error', err);
-	// 		});
-	// },[]);
-	function saleProduct() {
-		product.quantity = product.quantity - 1;
-	}
+	// useEffect(
+	// 	() => {
+	// 		setTotal([ ...total, subTotal ]);
+	// 	},
+	// 	[ subTotal ]
+	// );
 
-	function addItem() {
+	const increaseCount = id => {
 		setCount(prevCount => prevCount + 1);
-	}
-
-	function removeItem() {
-		if (count !== 0) {
-			setCount(prevCount => prevCount - 1);
-			product.quantity = product.quantity + 1;
-		}
-	}
-
-	function handleChange(e) {
-		const { id, value } = e.target;
-		console.log(value);
-
 		const newProducts = products.map(product => {
 			if (product.id === id) {
-				return {
-					...product,
-					quantity : Number(product.quantity) + Number(value)
-				};
+				return { ...product, quantity: product.quantity - 1 };
 			}
-			return product;
+			return { ...product };
 		});
 		setProducts(newProducts);
-	}
+	};
+
+	const decreaseCount = id => {
+		if (count !== 0) {
+			setCount(prevCount => prevCount - 1);
+			const newProducts = products.map(product => {
+				if (product.id === id) {
+					return { ...product, quantity: product.quantity + 1 };
+				}
+				return { ...product };
+			});
+			setProducts(newProducts);
+		}
+	};
 
 	return (
 		<tr>
 			<td>{product.name}</td>
-			<td>{initInventory}</td>
-			<td className='inventory-col'>
-				<input type='number' id={product.id} onChange={handleChange} />
+			<td id={product.id} className='inventory-col'>
+				<span>
+					<button onClick={() => decreaseCount(product.id)}>-</button>
+				</span>
+				<div>{count}</div>
+				<span>
+					<button onClick={() => increaseCount(product.id)}>+</button>
+				</span>
 			</td>
+			<td>{subTotal}</td>
+			<td>{product.quantity}</td>
 		</tr>
 	);
 };

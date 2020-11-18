@@ -1,45 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import InventoryProduct from './InventoryProduct';
 import { firestore } from '../firebase/firebase.utils';
 
+
 import './InventoryProduct.scss';
 
-const InventoryTable = () => {
-	const [ products, setProducts ] = useState([]);
+const InventoryTable = ({ products, setProducts }) => {
+	const [ total, setTotal ] = useState([]);
 
-	useEffect(() => {
-		const productsRef = firestore.collection('productos');
-		productsRef
-			.get()
-			.then(snapshot => {
-				const data = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-				setProducts(data);
-			})
-			.catch(err => {
-				console.log('Error', err);
-			});
-	}, []);
+	const addProductsToCart = async (products) => {
+		products.map(product=>{
+			firestore.collection('productos').doc(product.id).update({quantity:product.quantity})
 
-	function updateInventory() {
-		const updatedProducts = [];
-
-		products.forEach(product => {
-			const productRef = firestore.collection('productos').doc(product.id);
-			productRef
-				.update({ quantity: product.quantity })
-				.then(function() {
-					updatedProducts.push(true);
-				})
-				.catch(function(error) {
-					console.error('Error updating document: ', error);
-				});
-		});
-
-		const updated = element => element === true;
-		const succes = 'Productos actualizados en la Base de Datos';
-		const fail = 'Error al actualizar productos';
-		updatedProducts.every(updated) ? alert(succes) : alert(fail);
-	}
+		})
+		console.log('BD Modificada')
+		// console.log(products)
+	};
 
 	return (
 		<div>
@@ -47,8 +23,9 @@ const InventoryTable = () => {
 				<thead>
 					<tr>
 						<th>Producto</th>
-						<th>Inventario</th>
 						<th>Cantidad</th>
+						<th>Sub Total</th>
+						<th>Inventario</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -59,30 +36,23 @@ const InventoryTable = () => {
 								product={product}
 								products={products}
 								setProducts={setProducts}
+								total={total}
+								setTotal={setTotal}
+								// subTotal={subTotal}
+								// setSubTotal={setSubTotal}
 							/>
 						);
 					})}
 					<tr>
 						<td />
-						<td>
-							<button className='update-inventory-btn' onClick={() => updateInventory()}>
-								Vender
-							</button>
-						</td>
-						<td>
-							<button className='update-inventory-btn'>Actualizar Inventario</button>
-						</td>
+						<td>Total</td>
+						<td>{0}</td>
 					</tr>
 				</tbody>
 			</table>
-			{/* <div className='table-btn-container'>
-				<button className='update-inventory-btn' onClick={() => updateInventory()}>
-					Vender
-				</button>
-				<button className='update-inventory-btn' onClick={() => updateInventory()}>
-					Actualizar Inventario
-				</button>
-			</div> */}
+			<button className='update-inventory-btn' onClick={() => addProductsToCart(products)}>
+				Vender
+			</button>
 		</div>
 	);
 };
