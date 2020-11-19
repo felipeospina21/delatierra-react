@@ -1,42 +1,47 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { thousandSeparator } from '../context/utils';
 
 import './InventoryProduct.scss';
 
-const InventoryProduct = ({ product, products, setProducts, total, setTotal }) => {
+const ProductRow = ({ product, products, setProducts }) => {
 	const [ count, setCount ] = useState(0);
 	const [ subTotal, setSubTotal ] = useState(0);
+	const ref = useRef(count);
 
 	useEffect(
 		() => {
-			setSubTotal(product.price * count);
+			setSubTotal(product.price * ref.current);
 		},
 		[ products ]
 	);
 
-	// useEffect(
-	// 	() => {
-	// 		setTotal([ ...total, subTotal ]);
-	// 	},
-	// 	[ subTotal ]
-	// );
-
 	const increaseCount = id => {
 		setCount(prevCount => prevCount + 1);
+		ref.current = count + 1;
 		const newProducts = products.map(product => {
 			if (product.id === id) {
-				return { ...product, quantity: product.quantity - 1 };
+				return {
+					...product,
+					quantity : product.quantity - 1,
+					subTotal : product.price * ref.current
+				};
 			}
 			return { ...product };
 		});
-		setProducts(newProducts);
+		setProducts(() => newProducts);
 	};
 
 	const decreaseCount = id => {
 		if (count !== 0) {
 			setCount(prevCount => prevCount - 1);
+			ref.current = count - 1;
 			const newProducts = products.map(product => {
 				if (product.id === id) {
-					return { ...product, quantity: product.quantity + 1 };
+					return {
+						...product,
+						quantity : product.quantity + 1,
+						subTotal : product.price * ref.current
+					};
 				}
 				return { ...product };
 			});
@@ -46,8 +51,9 @@ const InventoryProduct = ({ product, products, setProducts, total, setTotal }) =
 
 	return (
 		<tr>
-			<td>{product.name}</td>
-			<td id={product.id} className='inventory-col'>
+			<td className='inventory-name'>{product.name}</td>
+			<td>{product.quantity}</td>
+			<td id={product.id} className='quantity-col'>
 				<span>
 					<button onClick={() => decreaseCount(product.id)}>-</button>
 				</span>
@@ -56,10 +62,11 @@ const InventoryProduct = ({ product, products, setProducts, total, setTotal }) =
 					<button onClick={() => increaseCount(product.id)}>+</button>
 				</span>
 			</td>
-			<td>{subTotal}</td>
-			<td>{product.quantity}</td>
+			<td>
+				<div className='inventory-subtotal'>{thousandSeparator(subTotal)}</div>
+			</td>
 		</tr>
 	);
 };
 
-export default InventoryProduct;
+export default ProductRow;

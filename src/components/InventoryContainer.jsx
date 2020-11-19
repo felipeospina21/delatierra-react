@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import ProductsTable from './ProductsTable';
 import InventoryTable from './InventoryTable';
-import Inventory from './Inventory';
-import Checkout from './Checkout';
 import { firestore } from '../firebase/firebase.utils';
+
+import './InventoryProduct.scss';
 
 const InventoryContainer = () => {
 	const [ products, setProducts ] = useState([]);
@@ -21,10 +22,9 @@ const InventoryContainer = () => {
 		});
 	};
 	return (
-		<div>
+		<div className='inventory-container'>
+			<ProductsTable products={products} setProducts={setProducts} />
 			<InventoryTable products={products} setProducts={setProducts} />
-			<Inventory products={products} setProducts={setProducts} />
-			<Checkout />
 		</div>
 	);
 };

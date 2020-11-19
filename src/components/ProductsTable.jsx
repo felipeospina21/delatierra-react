@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import InventoryRow from './InventoryRow';
+import ProductRow from './ProductRow';
+import Total from './Total';
 import { firestore } from '../firebase/firebase.utils';
+
 import './InventoryProduct.scss';
 
-
-const InventoryTable = ({ products, setProducts }) => {
-	const addToInventory = async products => {
+const ProductsTable = ({ products, setProducts }) => {
+	const addProductsToCart = async products => {
 		products.map(product => {
 			firestore
 				.collection('productos')
@@ -13,23 +14,25 @@ const InventoryTable = ({ products, setProducts }) => {
 				.update({ quantity: product.quantity });
 		});
 		console.log('BD Modificada');
+		// console.log(products)
 	};
 
 	return (
 		<div className='table-inventory-container'>
-			<table>
+			<table className='table'>
 				<thead>
 					<tr>
 						<th>Producto</th>
-						<th>Inventario</th>
-						<th>Agregar Cantidad</th>
+						<th>Invent</th>
+						<th>Cantidad</th>
+						<th>Sub Total</th>
 					</tr>
 				</thead>
 				<tbody>
 					{products.map(product => {
 						return (
-							<InventoryRow
-								key={product.id}
+							<ProductRow
+								key={product.name}
 								product={product}
 								products={products}
 								setProducts={setProducts}
@@ -38,9 +41,13 @@ const InventoryTable = ({ products, setProducts }) => {
 					})}
 				</tbody>
 			</table>
-			<button className='update-inventory-btn' onClick={() => addToInventory(products)}>Actualizar</button>
+			<Total products={products} />
+
+			<button className='sale-btn' onClick={() => addProductsToCart(products)}>
+				Vender
+			</button>
 		</div>
 	);
 };
 
-export default InventoryTable;
+export default ProductsTable;

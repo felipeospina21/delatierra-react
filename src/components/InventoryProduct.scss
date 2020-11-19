@@ -1,26 +1,109 @@
-table,
 td {
 	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+table,
+td,
+th {
+	// border: 1px solid black;
 	margin: 0;
 	border-spacing: 0;
+	width: 100%;
+	font-size: 15px;
 }
 
-td {
-	margin: 0;
-	padding: 0.3em 1em;
+td,
+th {
+	padding: 0.3em;
+	width: auto;
+	max-width: 220px;
+}
+
+.inventory-container {
+	display: flex;
+	justify-content: left;
+	margin: auto;
+	flex-wrap: wrap;
+}
+
+.table-inventory-container {
+	width: 100%;
+	margin: 0.5em;
+}
+
+.inventory-total {
+	margin: 2em 0 0 0;
+	height: 2em;
 	width: 10em;
+	border: 1px solid black;
+	display: flex;
+
+	div {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100%;
+		width: 40%;
+		margin: auto;
+		// border: 1px solid red;
+	}
+
+	.inventory-total-value {
+		width: 60%;
+	}
 }
 
-.inventory-col {
+.inventory-subtotal {
+	width: 60px;
+}
+
+.inventory-name {
+	width: 200px;
+}
+
+.quantity-col {
 	display: flex;
 	justify-content: space-around;
 	align-items: stretch;
+	width: 100%;
+	padding: auto;
+
+	span {
+		margin: 0 0.2em;
+	}
+	div {
+		width: 40px;
+		padding: 0 5px;
+		margin: 0 0.4em;
+		border: 1px solid black;
+	}
+	button {
+		background: transparent;
+		border: none;
+		font-size: 20px;
+	}
 }
 
-.update-inventory-btn {
-	display: block;
-	margin: 0;
+%btn{
+	display: flex;
+	justify-content: center;
+	margin: 2em auto;
 	padding: 0.5em 1em;
+	border: none;
+	width: 8em;
+}
+
+.sale-btn {
+	background-color: rgb(10, 230, 10);
+	@extend %btn
+}
+
+.update-inventory-btn{
+	background-color: rgb(238, 25, 25);
+	@extend %btn
+
+
 }
 
 .table-btn-container {
